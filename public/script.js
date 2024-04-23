@@ -4,7 +4,7 @@ const todoList = document.getElementById('todo-list');
 
 // Fetch tasks from the API
 function fetchTasks() {
-  fetch('/api/tasks')
+  fetch('/tasks')
     .then((response) => response.json())
     .then((tasks) => {
       renderTasks(tasks);
@@ -37,7 +37,7 @@ function renderTasks(tasks) {
 function addTask() {
   const taskText = todoInput.value.trim();
   if (taskText) {
-    fetch('/api/tasks', {
+    fetch('/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function addTask() {
 
 // Update a task
 function updateTask(taskId, completed) {
-  fetch(`/api/tasks/${taskId}`, {
+  fetch(`/tasks/${taskId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ function updateTask(taskId, completed) {
 
 // Delete a task
 function deleteTask(taskId) {
-  fetch(`/api/tasks/${taskId}`, {
+  fetch(`/tasks/${taskId}`, {
     method: 'DELETE',
   })
     .then(() => {
