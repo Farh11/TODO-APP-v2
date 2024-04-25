@@ -4,7 +4,7 @@ const todoList = document.getElementById('todo-list');
 
 // Fetch tasks from the API
 function fetchTasks() {
-  fetch('/tasks')
+  fetch('/api/tasks')
     .then((response) => response.json())
     .then((tasks) => {
       renderTasks(tasks);
@@ -19,16 +19,16 @@ function renderTasks(tasks) {
   todoList.innerHTML = '';
   tasks.forEach((task) => {
     const taskItem = document.createElement('li');
-    taskItem.className = 'list-group-item';
     taskItem.innerHTML = `
-      <div class="d-flex justify-content-between align-items-center">
-        <span>${task.text}</span>
-        <div>
-          <button class="btn btn-sm btn-success" onclick="updateTask(${task.id}, true)">Complete</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">Delete</button>
-        </div>
+      <span>${task.text}</span>
+      <div>
+        <button onclick="updateTask(${task.id}, true)">Complete</button>
+        <button onclick="deleteTask(${task.id})">Delete</button>
       </div>
     `;
+    if (task.completed) {
+      taskItem.classList.add('completed');
+    }
     todoList.appendChild(taskItem);
   });
 }
@@ -37,7 +37,7 @@ function renderTasks(tasks) {
 function addTask() {
   const taskText = todoInput.value.trim();
   if (taskText) {
-    fetch('/tasks', {
+    fetch('/api/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function addTask() {
 
 // Update a task
 function updateTask(taskId, completed) {
-  fetch(`/tasks/${taskId}`, {
+  fetch(`/api/tasks/${taskId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ function updateTask(taskId, completed) {
 
 // Delete a task
 function deleteTask(taskId) {
-  fetch(`/tasks/${taskId}`, {
+  fetch(`/api/tasks/${taskId}`, {
     method: 'DELETE',
   })
     .then(() => {

@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: path.join(__dirname, 'views') });
 });
-app.use('api/tasks', taskRoutes);
+app.use('/api/tasks', taskRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
